@@ -11,13 +11,14 @@ class Core:
     Response Object.  This class will give the user more fine grained access to the JAMA API.  For more information
     on the Requests library visit: http://docs.python-requests.org/en/master/"""
 
-    def __init__(self, host_name, user_credentials, api_version='/rest/v1/', oauth=False):
+    def __init__(self, host_name, user_credentials, api_version='/rest/v1/', oauth=False, verify=True):
         # Instance variables
         self.__api_version = api_version
         self.__host_name = host_name + self.__api_version
         self.__credentials = user_credentials
         self.__oauth = oauth
         self.__session = requests.Session()
+        self.__session.verify = verify
 
         # Setup OAuth if needed.
         if self.__oauth:

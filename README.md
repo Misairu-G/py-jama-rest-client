@@ -16,17 +16,44 @@ easily access the REST API to retrieve, and modify data within their Jama Instan
 Please note that this client is distributed as-is as an example and will likely require modification to work for your 
 specific use-case.
 
+## About this fork
+
+- The original py-jama-rest-client lists Python3.7 as a requirement, this fork use Python3.6 instead.
+- The original version enforce SSL check, but this is not possible in some intranet configuration, 
+  this fork add the option to bypass the SSL certificate check. 
+- Use conda instead of pipenv to manage the environment.
+- Update README.md to include test method
+
 ## Requirements
-- [Python 3.7](https://www.python.org/downloads/release/python-372/)
-- [Pipenv(recommended)](https://pipenv.readthedocs.io/en/latest/)
+- Python 3.6
+- [Conda](https://docs.conda.io/en/latest/miniconda.html)
 
 ## Setup
-Create a new directory and install py-jama-rest-client using pipenv.
- ```bash
- mkdir example_project
- cd example_project
- pipenv --python 3.7
- pipenv install py-jama-rest-client
+```bash
+# Create a conda environment
+conda create -n <env_name> python=3.6 requests
+conda activate <env_name>
+
+# Clone the project
+git clone https://github.com/Misairu-G/py-jama-rest-client.git
+cd py-jama-rest-client
+
+# Install
+pip install .
+```
+
+## Test
+
+```bash
+# Tell python where to find the package
+export PYTHONPATH="$(pwd -P)/py_jama_rest_client:$PYTHONPATH"
+
+# Provide JAMA API access
+export JAMA_API_URL='<your_api_url>'
+export JAMA_API_USERNAME='<your_username>'
+export JAMA_API_PASSWORD='<your_password>'
+
+python -m unittest discover -s test -p 'test_*.py'
 ```
 
 ### REST Calls Supported in the Client
@@ -109,7 +136,6 @@ compatibility)
 #### Client instantiation
 To instantiate a Basic authentication client:
 ```python
-
 basic_auth_client = JamaClient('https://yourdomain.jamacloud.com', credentials=('username', 'password'))
 ```
 
